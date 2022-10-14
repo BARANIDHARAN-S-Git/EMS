@@ -1,0 +1,15 @@
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Business Logic Layer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Business Logic Layer.pdb
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\obj\Debug\Business Logic Layer.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\obj\Debug\Business Logic Layer.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\obj\Debug\Business Logic Layer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\obj\Debug\Business Logic Layer.pdb
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Business Logic Layer.dll.config
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Data Access Layer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\EntityFramework.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Data Access Layer.pdb
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\Data Access Layer.dll.config
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\EntityFramework.xml
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Lenovo\Desktop\vs\EMS\Business Logic Layer\obj\Debug\Business Logic Layer.csproj.CopyComplete

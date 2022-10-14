@@ -1,0 +1,563 @@
+GithubLink:https://github.com/BARANIDHARAN-S-Git/EMS
+---------------------------------------EMSBLL.cs-----------------------
+using Data_Access_Layer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Business_Logic_Layer
+{
+    public class EMSBLL
+    {
+
+        EMSMethods dal;
+        public EMSBLL()
+        {
+            dal = new EMSMethods();
+        }
+        public List<EmpProfile> ShowEmployeeList()
+        {
+            return dal.ShowallEmployee();
+        }
+
+        public List<DeptMaster> ShowDepartmentList()
+        {
+            return dal.ShowallDepts();
+        }
+
+        public  void AddEmployee(EmpProfile employee)
+        {
+              dal.InsertEmployee(employee);
+
+        }
+        public void AddDept(DeptMaster dept)
+        {
+            dal.InsertDept(dept);
+
+        }
+
+        public void Editemp(int id,EmpProfile employee)
+        {
+            dal.UpdateEmp(id, employee);
+        }
+
+        public void Editdept(int id, DeptMaster dept)
+        {
+            dal.Updatedept(id, dept);
+        }
+
+        public void Removeemp(int id)
+        {
+            dal.DeleteEmp(id);
+        }
+
+        public void Removedept(int id)
+        {
+            dal.Deletedep(id);
+        }
+        public EmpProfile searchemp(int id)
+        {
+            return dal.findempbyid(id);
+        }
+
+        public DeptMaster searchdept(int id)
+        {
+            return dal.finddeptbyid(id);
+        }
+
+    }
+}
+
+---------------------------------DeptMaster.cs---------------------------
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Data_Access_Layer
+{
+    public class DeptMaster
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int DeptCode { get; set; }
+
+        [MaxLength(30, ErrorMessage = "Not allowed above 30 chars")]
+        [MinLength(3, ErrorMessage = "Not allowed below 3 chars")]
+        public string DeptName { get; set; }
+
+        public virtual ICollection<EmpProfile> EmpProfiles { get; set; }
+    }
+}
+
+----------------------------------------EmpProfile.cs-------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
+
+namespace Data_Access_Layer
+{
+   
+       
+
+        public class EmpProfile
+        {
+            [Key]
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+            public int EmpCode { get; set; }
+
+            public DateTime DateOfBirth { get; set; }
+
+            [MaxLength(30, ErrorMessage = "Not allowed above 30 chars")]
+            [MinLength(3, ErrorMessage = "Not allowed below 3 chars")]
+            public string EmpName { get; set; }
+
+            public string Email { get; set; }
+
+      
+            [ForeignKey("DeptMaster")]
+            public int DeptCode { get; set; }
+
+        
+            public virtual DeptMaster DeptMaster { get; set; }
+        
+        }
+        public class MyContext : DbContext
+        {
+            public MyContext() : base("MyContext")
+            {
+                Database.SetInitializer(new SeedMethod());
+            }
+
+           public virtual DbSet<DeptMaster> DepartmentTable { get; set; }
+        
+            public virtual DbSet<EmpProfile> EmployeeTable { get; set; }
+           
+        }
+
+       
+    
+}
+
+------------------------EMSMethod.cs-------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Data_Access_Layer
+{
+    public  class EMSMethods
+    {
+
+        MyContext Context = null;
+        public EMSMethods()
+        {
+            Context = new MyContext();
+        }
+
+        public List<DeptMaster> ShowallDepts()
+        {
+              return Context.DepartmentTable.ToList();
+    
+        }
+
+        public List<EmpProfile> ShowallEmployee()
+        {
+            return Context.EmployeeTable.ToList();
+
+        }
+
+        public void InsertEmployee(EmpProfile emp)
+        {
+
+            
+                Context.EmployeeTable.Add(emp);
+                Context.SaveChanges();
+                
+        }
+        public void InsertDept(DeptMaster dept)
+        {
+
+
+            Context.DepartmentTable.Add(dept);
+            Context.SaveChanges();
+
+        }
+        public void UpdateEmp(int id,EmpProfile employee)
+        {
+            var r = Context.EmployeeTable.ToList().Find(a => a.EmpCode == id);
+            Context.EmployeeTable.Remove(r);
+            Context.EmployeeTable.Add(employee);
+            Context.SaveChanges();
+
+        }
+
+        public void Updatedept(int id, DeptMaster dept)
+        {
+            var a = Context.DepartmentTable.ToList().Find(b => b.DeptCode == id);
+            Context.DepartmentTable.Remove(a);
+            Context.DepartmentTable.Add(dept);
+            Context.SaveChanges();
+
+        }
+
+        public void DeleteEmp(int id)
+        {
+            var d = Context.EmployeeTable.ToList().Find(c => c.EmpCode == id);
+            Context.EmployeeTable.Remove(d);
+            Context.SaveChanges();
+        }
+
+        public void Deletedep(int id)
+        {
+            var e= Context.DepartmentTable.ToList().Find(d => d.DeptCode == id);
+            Context.DepartmentTable.Remove(e);
+            Context.SaveChanges();
+        }
+
+        public EmpProfile findempbyid(int id)
+        {
+            var z = Context.EmployeeTable.ToList().Find(e => e.EmpCode == id);
+            return z;
+        }
+
+        public DeptMaster finddeptbyid(int id)
+        {
+           
+            var u = Context.DepartmentTable.ToList().Find(f => f.DeptCode == id);
+            return u;
+        }
+
+    }
+      
+}
+--------------------------------------------------------SeedMethod.cs---------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Data_Access_Layer
+{
+    public class SeedMethod : DropCreateDatabaseIfModelChanges<MyContext>
+    {
+        protected override void Seed(MyContext context)
+        {
+            List<DeptMaster> deptlist = new List<DeptMaster>();
+            deptlist.Add(new DeptMaster()
+            {
+                DeptCode=101,DeptName="Sales"
+            });
+            deptlist.Add(new DeptMaster()
+            {
+                DeptCode = 102,
+                DeptName = "Finance"
+            });
+            deptlist.Add(new DeptMaster()
+            {
+                DeptCode = 103,
+                DeptName = "Administration"
+            });
+            context.DepartmentTable.AddRange(deptlist);
+            List<EmpProfile>emplist=new List<EmpProfile>();
+            emplist.Add(new EmpProfile()
+            {
+                EmpCode=4522,
+                DateOfBirth=new DateTime(2000,06,17),
+                EmpName="Buttler",
+                Email="Buttler123@gmail.com",
+                DeptCode=101
+
+            }
+            );
+            emplist.Add(new EmpProfile()
+            {
+                EmpCode = 4542,
+                DateOfBirth = new DateTime(2000, 04, 23),
+                EmpName = "Axar",
+                Email = "Axar456@gmail.com",
+                DeptCode = 102
+
+            }
+            );
+            emplist.Add(new EmpProfile()
+            {
+                EmpCode = 4564,
+                DateOfBirth = new DateTime(2001, 08, 14),
+                EmpName = "IshanKishan",
+                Email = "IshanKishan234@gmail.com",
+                DeptCode = 103
+
+            }
+            );
+            context.EmployeeTable.AddRange(emplist);
+            context.SaveChanges();
+            base.Seed(context);
+        }
+
+    }
+
+}
+
+------------------------------------DeptMasterController.cs--------------------------------------------
+
+using Business_Logic_Layer;
+using Data_Access_Layer;
+using EMS.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace EMS.Controllers
+{
+    public class DeptMasterController : ApiController
+    {
+        EMSBLL a=null;
+        public DeptMasterController()
+        {
+            a=new EMSBLL();
+        }
+
+
+        [Route("Getalldept")]
+        public List<DeptMaster> Get()
+        {
+            List<DeptMaster> l=new List<DeptMaster>();
+            var b = a.ShowDepartmentList();
+            foreach(var item in b)
+            {
+                l.Add(
+
+                    new DeptMaster()
+                    {
+                        DeptCode=item.DeptCode,DeptName=item.DeptName
+                    }
+                );
+            }
+            return l;
+
+            
+        }
+
+
+        [Route("Searchdeptbyid/{id}")]
+        public DeptmasterModel Get(int id)
+        {
+            DeptmasterModel employee = new DeptmasterModel();
+            DeptMaster deptdata = a.searchdept(id);
+            employee.DeptCode = Convert.ToInt32(deptdata.DeptCode);
+          
+            employee.DeptName= deptdata.DeptName.ToString();
+            
+            return employee;
+        }
+
+
+        [Route("Adddept")]
+        public void Post([FromBody] DeptmasterModel empdata)
+        {
+            DeptMaster dept = new DeptMaster();
+           
+            dept.DeptCode=empdata.DeptCode;
+            dept.DeptName=empdata.DeptName;
+
+            a.AddDept(dept);
+            
+
+        }
+
+        [Route("Editdept/{id}")]
+        public void Put(int id, [FromBody] DeptmasterModel deptdata)
+        {
+            DeptMaster dept = new DeptMaster();
+
+            dept.DeptCode = deptdata.DeptCode;
+            dept.DeptName = deptdata.DeptName;
+            
+            a.Editdept(id, dept);
+        }
+
+        [Route("Removedept/{id}")]
+        public void Delete(int id)
+        {
+            a.Removedept(id);
+        }
+    }
+}
+
+------------------------------------EmpProfileController.cs---------------------------------
+
+using Business_Logic_Layer;
+using Data_Access_Layer;
+using EMS.Models;
+using System;
+using System.Collections.Generic;
+using System.Web.Http;
+
+namespace EMS.Controllers
+{
+    public class EmpProfileController : ApiController
+    {
+        EMSBLL e = null;
+        public EmpProfileController()
+        {
+            e = new EMSBLL();
+        }
+
+
+
+
+        [Route("Getallemp")]
+        public List<EmpProfile> Get()
+        {
+            List<EmpProfile> m = new List<EmpProfile>();
+            var a = e.ShowEmployeeList();
+            foreach (var item in a)
+            {
+                m.Add(
+
+                      new EmpProfile() { EmpCode = item.EmpCode, DateOfBirth = item.DateOfBirth, EmpName = item.EmpName, Email = item.Email, DeptCode = item.DeptCode }
+                  );
+            }
+            return m;
+        }
+
+        [Route("Searchempbyid/{id}")]
+        public EmpProfileModels Get(int id)
+        {
+            EmpProfileModels employee = new EmpProfileModels();
+            EmpProfile empdata = e.searchemp(id);
+            employee.EmpCode = Convert.ToInt32(empdata.EmpCode);
+            employee.DateOfBirth = Convert.ToDateTime(empdata.DateOfBirth);
+            employee.EmpName = empdata.EmpName.ToString();
+            employee.Email = empdata.Email.ToString();
+            employee.DeptCode = Convert.ToInt32(empdata.DeptCode);
+            return employee;
+        }
+
+        [Route("Addemp")]
+        public void  Post([FromBody] EmpProfileModels empdata)
+        {
+            EmpProfile emp = new EmpProfile();
+            
+           emp.EmpCode=empdata.EmpCode;
+           emp.DateOfBirth = empdata.DateOfBirth;
+           emp.EmpName=empdata.EmpName;
+           emp.Email=empdata.Email;
+           emp.DeptCode=empdata.DeptCode;
+
+
+            e.AddEmployee(emp);
+        }
+
+        [Route("Editemp/{id}")]
+        public void Put(int id,[FromBody] EmpProfileModels empdata)
+        {
+            EmpProfile emp = new EmpProfile();
+
+            emp.EmpCode = empdata.EmpCode;
+            emp.DateOfBirth = empdata.DateOfBirth;
+            emp.EmpName = empdata.EmpName;
+            emp.Email = empdata.Email;
+            emp.DeptCode = empdata.DeptCode;
+            e.Editemp(id, emp);
+        }
+
+        [Route("Removeemp/{id}")]
+        public void Delete(int id)
+        {
+            e.Removeemp(id);
+        }
+
+        
+    }
+}
+
+----------------------------------DeptmasterModel.cs--------------------------
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace EMS.Models
+{
+    public class DeptmasterModel
+    {
+       
+            [Required()]
+            public int DeptCode { get; set; }
+
+            [MaxLength(30, ErrorMessage = "Not allowed above 30 chars")]
+            [MinLength(3, ErrorMessage = "Not allowed below 3 chars")]
+            public string DeptName { get; set; }
+
+           public virtual ICollection<EmpProfileModels> EmpProfiles { get; set; }
+        
+    }
+}
+
+
+-----------------------------EmpProfileModel.cs----------------------------------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace EMS.Models
+{
+   
+      
+        public class EmpProfileModel
+        {
+            [Required()]
+            public int EmpCode { get; set; }
+
+            public DateTime DateOfBirth { get; set; }
+
+            [MaxLength(30, ErrorMessage = "Not allowed above 30 chars")]
+            [MinLength(3, ErrorMessage = "Not allowed below 3 chars")]
+            public string EmpName { get; set; }
+
+            public string Email { get; set; }
+        
+
+             
+            public int DeptCode { get; set; }
+            
+            public virtual DeptmasterModel DeptMaster { get; set; }
+        
+
+        }
+    
+}

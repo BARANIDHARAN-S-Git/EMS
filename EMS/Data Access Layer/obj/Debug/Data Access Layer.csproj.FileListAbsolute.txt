@@ -1,0 +1,12 @@
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\Data Access Layer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\Data Access Layer.pdb
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\obj\Debug\Data Access Layer.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\obj\Debug\Data Access Layer.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\obj\Debug\Data Access Layer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\obj\Debug\Data Access Layer.pdb
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\obj\Debug\Data Access Layer.csproj.CopyComplete
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\Data Access Layer.dll.config
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\EntityFramework.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\EntityFramework.xml
+C:\Users\Lenovo\Desktop\vs\EMS\Data Access Layer\bin\Debug\EntityFramework.SqlServer.xml
